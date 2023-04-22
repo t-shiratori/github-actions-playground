@@ -1,0 +1,65 @@
+name: CREATE-PR-TO-UPDATE-PKG-VERSION
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "package version"
+        required: true
+        type: string
+
+env:
+  NODE_VERSION: 18
+  BRANCH_NAME: ${{ github.ref_name }}
+  GH_TOKEN: ${{ github.token }} # gh pr create に必要
+
+jobs:
+  create-pr-to-update-pkg-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: SetUpNode
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      # workflow_dispatchのパラメータからバージョンを取得する
+      - name: Get version
+        run: |
+
+          VERSION=${{ inputs.version }}
+          echo "Version $VERSION"
+
+          : # 環境変数にバージョンを保存
+          echo "NEW_PACKAGE_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Update package version
+        run: |
+
+          : # gitにアカウント情報をセット
+          git config --global user.name $GITHUB_ACTOR
+          git config --global user.email $GITHUB_ACTOR@users.noreply.github.com
+
+          : # ブランチを作成してチェックアウト
+          NEW_BRANCH_NAME=feature/update-package-version-to-${{ env.NEW_PACKAGE_VERSION }}
+          git switch -c $NEW_BRANCH_NAME
+
+          : # package.jsonのバージョンを更新
+          npm version ${{ env.NEW_PACKAGE_VERSION }} --no-git-tag-version
+
+          : # 修正をコミット
+          git add package.json
+          git commit -m "Update package version to ${{ env.NEW_PACKAGE_VERSION }}"
+
+          : # ブランチをプッシュ
+          git push origin $NEW_BRANCH_NAME
+
+      - name: Create pull request
+        run: |
+          gh pr create \
+            --base ${{ env.BRANCH_NAME }} \
+            --title "Update package version to ${{ env.NEW_PACKAGE_VERSION }}" \
+            --body ""
