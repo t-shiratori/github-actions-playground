@@ -1,7 +1,7 @@
 {
   "name": "github-actions-playground",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.3",
   "type": "module",
   "scripts": {
     "dev": "vite",
