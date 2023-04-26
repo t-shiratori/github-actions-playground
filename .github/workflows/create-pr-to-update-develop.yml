@@ -47,6 +47,6 @@ jobs:
       - name: Create pull request
         run: |
           gh pr create \
-            --base ${{ env.BRANCH_NAME }} \
-            --title "Update package version to ${{ env.NEW_PACKAGE_VERSION }}" \
+            --base develop \
+            --title "Update develop" \
             --body ""
