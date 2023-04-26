@@ -1,12 +1,9 @@
-name: CREATE-PR-TO-UPDATE-PKG-VERSION
+name: CREATE-PR-TO-UPDATE-DEVELOP
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "package version"
-        required: true
-        type: string
+  pull_request:
+    types:
+      - closed
 
 env:
   NODE_VERSION: 18
@@ -14,7 +11,10 @@ env:
   GH_TOKEN: ${{ github.token }} # gh pr create に必要
 
 jobs:
-  create-pr-to-update-pkg-version:
+  create-pr-to-update-develop:
+
+    if: github.event.pull_request.merged == true
+    
     runs-on: ubuntu-latest
 
     steps:
