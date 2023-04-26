@@ -41,9 +41,6 @@ jobs:
           NEW_BRANCH_NAME=feature/update-develop
           git switch -c $NEW_BRANCH_NAME main 
 
-          : # fetch develop
-          git fetch develop
-
           : # ブランチをプッシュ
           git push origin $NEW_BRANCH_NAME
 
