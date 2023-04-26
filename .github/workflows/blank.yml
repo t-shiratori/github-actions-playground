@@ -7,6 +7,7 @@ name: CI
 on:
   push:
   pull_request:
+  create:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -24,14 +25,19 @@ jobs:
     - name: Run echo event
       run: echo "github.event_name ${{ github.event_name }}"
 
-    - name: push-event step
+    - name: push event step
       if: github.event_name == 'push'
       run: |
        echo push event
     
-    - name: pull_request-event step
+    - name: pull request event step
       if: github.event_name == 'pull_request'
       run: |
-       echo pull_request event
+       echo pull request event
+    
+    - name: create event step
+      if: github.event_name == 'create'
+      run: |
+       echo create event
         
 
