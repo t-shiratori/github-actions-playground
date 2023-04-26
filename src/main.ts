@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.ts'
 
 console.log('something2')
+console.log('hello ')
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
