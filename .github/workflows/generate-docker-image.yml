@@ -16,7 +16,7 @@ jobs:
         with:
           context: ./
           file: ./Dockerfile
-          outputs: type=local, dest=./docker-build-output
+          outputs: type=tar,dest=docker-image.tar
           push: false
           tags: "my-docker-image"
       
@@ -32,4 +32,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: docker-build-output
-          path: ./docker-build-output
+          path: ./docker-image.tar
