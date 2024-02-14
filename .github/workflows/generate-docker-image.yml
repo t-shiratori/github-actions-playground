@@ -16,7 +16,7 @@ jobs:
         with:
           context: ./
           file: ./Dockerfile
-          outputs: ./docker-build-output
+          outputs: type=local, dest=docker-build-output
           push: false
           tags: "my-docker-image"
       
