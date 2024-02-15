@@ -25,7 +25,7 @@ jobs:
         with:
           context: ./
           file: ./Dockerfile
-          outputs: type=docker ./docker-buid
+          outputs: . .
           push: false
           tags: "my-docker-image"
       
@@ -47,4 +47,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: docker-build-output
-          path: ./docker-buid
+          path: ./
