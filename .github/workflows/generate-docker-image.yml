@@ -11,40 +11,41 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-    #   - name: Build Image
-    #     uses: docker/build-push-action@v4
-    #     with:
-    #       context: ./
-    #       file: ./Dockerfile
-    #       outputs: type=tar,dest=docker-image.tar
-    #       push: false
-    #       tags: "my-docker-image"
-
-      - name: Build Image
+      - name: BuildImage
         uses: docker/build-push-action@v4
         with:
           context: ./
           file: ./Dockerfile
-          outputs: ./docker-build
+          outputs: type=tar,dest=docker-image.tar
           push: false
           tags: "my-docker-image"
       
-      - name: Confirm Files
+      - name: ls
         run: |
             ls -l
 
       - name: DockerInfo
         run: |
           docker info
-      
-    #   - name: UploadArtifact
-    #     uses: actions/upload-artifact@v3
-    #     with:
-    #       name: docker-build-output-tar
-    #       path: ./docker-image.tar
 
+      - name: DockerImages
+        run: |
+          docker images
+
+      - name: DockerImportImage
+        run: |
+          docker import docker-image.tar my-docker-image:latest
+        
+      - name: DockerImages
+        run: |
+          docker images
+
+      - name: DockerRunImage
+        run: |
+          docker run my-docker-image:latest
+      
       - name: UploadArtifact
         uses: actions/upload-artifact@v3
         with:
           name: docker-build-output
-          path: ./docker-build
+          path: ./docker-image.tar
