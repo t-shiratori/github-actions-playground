@@ -47,5 +47,5 @@ jobs:
       - name: UploadArtifact
         uses: actions/upload-artifact@v4
         with:
-          name: docker-build-output
+          name: docker-image
           path: ./docker-image.tar
