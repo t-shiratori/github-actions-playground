@@ -45,7 +45,7 @@ jobs:
           docker run my-docker-image:latest echo "test"
       
       - name: UploadArtifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docker-build-output
           path: ./docker-image.tar
