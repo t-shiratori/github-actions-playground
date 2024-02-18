@@ -42,7 +42,7 @@ jobs:
 
       - name: DockerRunImage
         run: |
-          docker run my-docker-image:latest
+          docker run my-docker-image:latest echo "test"
       
       - name: UploadArtifact
         uses: actions/upload-artifact@v3
