@@ -20,7 +20,7 @@ jobs:
           push: false
           tags: "my-docker-image"
       
-      - name: ls
+      - name: CheckFileList
         run: |
             ls -l
 
