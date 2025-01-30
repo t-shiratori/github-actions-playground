@@ -1,0 +1,23 @@
+#!/bin/zsh
+
+# コピーしたいイシューのID
+issueId=$1
+
+# イシューIDの指定がない場合はエラーで終了させる
+if [ -z $issueId ]; then
+  echo ">[エラー]" "引数でイシューIDを指定してください" 32
+  exit 1;
+fi
+
+# githubからイシューのデータを取得
+# @see https://cli.github.com/manual/gh_issue
+issueData=$(gh issue view "$issueId" --json body,title,labels --jq '{body: .body, title: .title, labelNameList: [.labels[].name]}')
+
+# JSONから、タイトル、本文、ラベルを抽出
+title=$(echo -E "$issueData" | jq -r '.title')
+body=$(echo -E "$issueData" | jq -r '.body')
+labelNameList=$(echo -E "$issueData" | jq -r '[.labelNameList[]] | join(",")')
+
+# 新しいイシューを作成
+gh issue create --title "$title コピー" --body "$body" --label "$labelNameList" --web
+
