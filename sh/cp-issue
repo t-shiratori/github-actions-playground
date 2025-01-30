@@ -4,8 +4,8 @@
 issueId=$1
 
 # イシューIDの指定がない場合はエラーで終了させる
-if [ -z $issueId ]; then
-  echo ">[エラー]" "引数でイシューIDを指定してください" 32
+if [ -z "$issueId" ]; then
+  echo "引数でイシューIDを指定してください"
   exit 1;
 fi
 
